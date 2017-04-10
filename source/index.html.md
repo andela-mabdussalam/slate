@@ -2,9 +2,6 @@
 title: API Reference
 
 language_tabs:
-  - shell
-  - ruby
-  - python
   - javascript
 
 toc_footers:
@@ -17,82 +14,604 @@ includes:
 search: true
 ---
 
-# Introduction
+# Document Management System
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the DocManager API. You can use our API to access various endpoints to create, edit and delete documents.
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+Endpoints data is returned in JSON format and error messages are displayed when there are errors with the request.
 
-This example API documentation page was created with [Slate](https://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
+Pls report any errors or concerns
 
-# Authentication
+# Roles
 
-> To authorize, use this code:
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
-
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
-```
+## CREATE A ROLE
 
 ```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
+curl -i -X POST https://docmanager1.herokuapp.com/api/roles” \
+-H "token: dfsa09gmkdsglkdsg343242a32a.xlkdsfiosdf"
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key.
+> The above command returns JSON structured like this:
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+```json
+{
+    "id": 3,
+    "title": "elder",
+    "updatedAt": "2017-04-10T21:39:22.166Z",
+    "createdAt": "2017-04-10T21:39:22.166Z"
+}
+```
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+This endpoint returns all roles in the database.
 
-`Authorization: meowmeowmeow`
+### HTTP Request
 
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+`GET https://docmanager1.herokuapp.com/api/roles`
+
+### Verbs, Response
+GET ,  201
+
+### Headers
+
+Header    | Description
+--------- | -------
+token | valid user token
+
+### Note
+Only admin users are allowed to hit this endpoint, Unauthorized users get a 401 response
+
+<aside class="success">
+token should be added in the format 'authorization: token'
 </aside>
 
-# Kittens
-
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
+## GET ALL ROLES
 
 ```javascript
-const kittn = require('kittn');
+curl -i -X GET https://docmanager1.herokuapp.com/api/roles” \
+-H "token: dfsa09gmkdsglkdsg343242a32a.xlkdsfiosdf"
+```
 
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
+> The above command returns JSON structured like this:
+
+```json
+[
+    {
+        "id": 1,
+        "title": "admin",
+        "createdAt": "2017-04-10T19:29:41.367Z",
+        "updatedAt": "2017-04-10T19:29:41.367Z"
+    },
+    {
+        "id": 2,
+        "title": "regular",
+        "createdAt": "2017-04-10T19:29:41.367Z",
+        "updatedAt": "2017-04-10T19:29:41.367Z"
+    }
+]
+```
+
+This endpoint returns all roles in the database.
+
+### HTTP Request
+
+`GET https://docmanager1.herokuapp.com/api/roles`
+
+### Verbs, Response
+GET ,  201
+
+### Headers
+
+Header    | Description
+--------- | -------
+token | valid user token
+
+### Note
+Only admin users are allowed to hit this endpoint, Unauthorized users get a 401 response
+
+<aside class="success">
+token should be added in the format 'authorization: token'
+</aside>
+
+## GET ONE ROLE
+
+```javascript
+curl -i -X GET https://docmanager1.herokuapp.com/api/roles/:id” \
+-H "token: dfsa09gmkdsglkdsg343242a32a.xlkdsfiosdf"
+
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "id": 1,
+    "title": "admin",
+    "createdAt": "2017-04-10T19:29:41.367Z",
+    "updatedAt": "2017-04-10T19:29:41.367Z"
+}
+```
+
+This endpoint returns all the role with the specified id
+
+### HTTP Request
+
+`GET https://docmanager1.herokuapp.com/api/roles/:id`
+
+### Verbs, Response
+GET ,  201
+
+### Headers
+
+Header    | Description
+--------- | -------
+token | valid user tokens
+
+### Query Parameters
+
+Parameter    | Required | Description
+--------- | -------  | ----------
+id     | yes  |  id of the role to be retrieved
+
+### Note
+Only admin users are allowed to hit this endpoint
+
+<aside class="success">
+token should be added in the format 'authorization: token'
+</aside>
+
+## EDIT A ROLE
+
+```javascript
+curl -i -X PUT -d "title=king" https://docmanager1.herokuapp.com/api/roles/2 \
+-H "token: dfsa09gmkdsglkdsg343242a32a.xlkdsfiosdf"
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "id": 2,
+    "title": "king",
+    "createdAt": "2017-04-10T19:29:41.367Z",
+    "updatedAt": "2017-04-10T21:31:19.798Z"
+}
+```
+
+This endpoint returns all the role with the specified id
+
+### HTTP Request
+
+`PUT https://docmanager1.herokuapp.com/api/roles/:id`
+
+### Verbs, Response
+PUT ,  201
+
+### Headers
+
+Header    | Description
+--------- | -------
+token | valid user tokens
+
+### Query Parameters
+
+Parameter    | Required | Description
+--------- | -------  | ----------
+id     | yes  |  id of the role to be edited
+
+### Note
+Only admin users are allowed to hit this endpoint
+
+<aside class="success">
+token should be added in the format 'authorization: token'
+</aside>
+
+## DELETE A ROLE
+
+```javascript
+curl -i -X PUT -d "title=king" https://docmanager1.herokuapp.com/api/roles/3 \
+-H "token: dfsa09gmkdsglkdsg343242a32a.xlkdsfiosdf"
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "message": "Succesfully deleted role"
+}
+```
+
+This endpoint returns all the role with the specified id
+
+### HTTP Request
+
+`DELETE https://docmanager1.herokuapp.com/api/roles/:id`
+
+### Verbs, Response
+DELETE ,  201
+
+### Headers
+
+Header    | Description
+--------- | -------
+token | valid user tokens
+
+### Query Parameters
+
+Parameter    | Required | Description
+--------- | -------  | ----------
+id     | yes  |  id of the role to be deleted
+
+### Note
+Only admin users are allowed to hit this endpoint
+
+<aside class="success">
+token should be added in the format 'authorization: token'
+</aside>
+
+# Users
+
+## CREATE A USER
+
+```javascript
+curl -i -X POST -d "userName=joys&firstName=ekums&lastName=toriolal&email=ekumtoriolau \
+@gmail.comekumtoriolau@gmail.com&password=1234567890&passwordConfirm=1234567890&roleId=2 \
+https://docmanager1.herokuapp.com/users \
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImpveXMiLCJlbWFpbCI6ImVrdW10b3Jpb2xhdUBnbWFpbC5jb20iLCJ1c2VyUm9sZUlkIjoyLCJ1c2VySWQiOjQsImlhdCI6MTQ5MTg2MjIxNiwiZXhwIjoxNDkxOTQ4NjE2fQ.RzPj4JhAso79iYexfrY5O0m10vbIrpTX-_Hi1SHu3Rw",
+    "expiresIn": 86400,
+    "user": {
+        "id": 4,
+        "userName": "joys",
+        "firstName": "ekums",
+        "lastName": "toriolal",
+        "email": "ekumtoriolau@gmail.com",
+        "userRoleId": 2,
+        "createdAt": "2017-04-10T22:10:16.040Z"
+    }
+}
+```
+
+This endpoint returns all the role with the specified id
+
+### HTTP Request
+
+`POST https://docmanager1.herokuapp.com/api/users`
+
+### Verbs, Response
+GET ,  201
+
+### Query Parameters
+
+Parameter    | Required | Description
+--------- | -------  | ----------
+userName     | yes  |  a valid name
+firstName    | yes  |  a valid firstname
+lastName     | yes  |  a valid lastname
+email        | yes  |  a valid email
+password     | yes  |  a valid passowrd(must be at least 8 characters)
+passwordConfirm | yes | must be same as the password
+roleId       | no   | If not specified, defaults to regular
+
+
+<aside class="success">
+Success message would be received on successful login
+</aside>
+
+## USER LOGIN
+
+```javascript
+curl -i -X POST -d "identifier=ekumtoriolau@gmail.com&password=1234567890" \
+https://docmanager1.herokuapp.com/users/login \
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "usertoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsInVzZXJOYW1lIjoiam95cyIsInVzZXJSb2xlSWQiOjIsImlhdCI6MTQ5MTg2Mjc2OSwiZXhwIjoxNDkxOTQ5MTY5fQ.MDH52uGpOazUWUs0YgYjFzYpvDMX_5O-WXQyS2y7MX8",
+    "message": "Login Successful"
+}
+```
+
+This endpoint returns all the role with the specified id
+
+### HTTP Request
+
+`GET https://docmanager1.herokuapp.com/api/roles/:id`
+
+### Verbs, Response
+GET ,  201
+
+### Headers
+
+Parameter    | Required | Description
+--------- | -------  | ----------
+identifier     | yes  |  the email or the username
+password    | yes  |  password
+
+### Note
+Only admin users are allowed to hit this endpoint
+
+<aside class="success">
+token should be added in the format 'authorization: token'
+</aside>
+
+## USER LOGOUT
+
+```javascript
+curl -i -X POST https://docmanager1.herokuapp.com/users/logout
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+ "message": "User logged out"
+}
+```
+
+This endpoint returns logouts a user
+
+### HTTP Request
+
+`POST https://docmanager1.herokuapp.com/api/users/logout`
+
+### Verbs, Response
+POST ,  201
+
+### Headers
+
+Header    | Description
+--------- | -------
+token | valid user token
+
+### Note
+Only admin users are allowed to hit this endpoint
+
+<aside class="success">
+token should be added in the format 'authorization: token'
+</aside>
+
+## GET ALL USERS
+
+```javascript
+curl -i -X GET https://docmanager1.herokuapp.com/users
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "users": [
+        {
+            "id": 1,
+            "userName": "Izaiah93",
+            "firstName": "Flavio",
+            "lastName": "Gusikowski",
+            "email": "Dianna_Windler@hotmail.com",
+            "roleId": 1,
+            "createdAt": "2017-04-10T19:29:41.437Z",
+            "updatedAt": "2017-04-10T19:29:41.437Z",
+            "Role": {
+                "title": "admin"
+            }
+        },
+        {
+            "id": 4,
+            "userName": "joys",
+            "firstName": "ekums",
+            "lastName": "toriolal",
+            "email": "ekumtoriolau@gmail.com",
+            "roleId": 2,
+            "createdAt": "2017-04-10T22:10:16.040Z",
+            "updatedAt": "2017-04-10T22:10:16.040Z",
+            "Role": {
+                "title": "king"
+            }
+        },
+        {
+            "id": 3,
+            "userName": "London.Hamill51",
+            "firstName": "Reta",
+            "lastName": "Rau",
+            "email": "Birdie_Spinka78@yahoo.com",
+            "roleId": 2,
+            "createdAt": "2017-04-10T19:29:41.722Z",
+            "updatedAt": "2017-04-10T19:29:41.722Z",
+            "Role": {
+                "title": "king"
+            }
+        },
+        {
+            "count": 3
+        }
+    ]
+}
+```
+
+This endpoint returns all the users
+
+### HTTP Request
+
+`GET https://docmanager1.herokuapp.com/users/?limit={integer}&offset={integer}`
+
+### Verbs, Response
+GET ,  201
+
+### Headers
+
+Header    | Description
+--------- | -------
+token | valid user tokens
+
+### Note
+Only admin users are allowed to hit this endpoint
+
+<aside class="success">
+token should be added in the format 'authorization: token'
+</aside>
+
+## GET ONE USER
+
+```javascript
+curl -i -X POST https://docmanager1.herokuapp.com/users/logout
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Fluffums",
+    "breed": "calico",
+    "fluffiness": 6,
+    "cuteness": 7
+  },
+  {
+    "id": 2,
+    "name": "Max",
+    "breed": "unknown",
+    "fluffiness": 5,
+    "cuteness": 10
+  }
+]
+```
+
+This endpoint returns all the role with the specified id
+
+### HTTP Request
+
+`GET https://docmanager1.herokuapp.com/api/roles/:id`
+
+### Verbs, Response
+GET ,  201
+
+### Headers
+
+Header    | Description
+--------- | -------
+token | valid user tokens
+
+### Note
+Only admin users are allowed to hit this endpoint
+
+<aside class="success">
+token should be added in the format 'authorization: token'
+</aside>
+
+## EDIT A USER
+
+```javascript
+curl -i -X PUT -d "firstName=mark" https://docmanager1.herokuapp.com/users/:id \
+-H "token: dfsa09gmkdsglkdsg343242a32a.xlkdsfiosdf"
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Fluffums",
+    "breed": "calico",
+    "fluffiness": 6,
+    "cuteness": 7
+  },
+  {
+    "id": 2,
+    "name": "Max",
+    "breed": "unknown",
+    "fluffiness": 5,
+    "cuteness": 10
+  }
+]
+```
+
+This endpoint returns all the role with the specified id
+
+### HTTP Request
+
+`GET https://docmanager1.herokuapp.com/api/roles/:id`
+
+### Verbs, Response
+GET ,  201
+
+### Headers
+
+Header    | Description
+--------- | -------
+token | valid user tokens
+
+### Note
+Only admin users are allowed to hit this endpoint
+
+<aside class="success">
+token should be added in the format 'authorization: token'
+</aside>
+
+## DELETE A USER
+
+```javascript
+curl -i -X PUT -d "firstName=mark" https://docmanager1.herokuapp.com/users/:id \
+-H "token: dfsa09gmkdsglkdsg343242a32a.xlkdsfiosdf"
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Fluffums",
+    "breed": "calico",
+    "fluffiness": 6,
+    "cuteness": 7
+  },
+  {
+    "id": 2,
+    "name": "Max",
+    "breed": "unknown",
+    "fluffiness": 5,
+    "cuteness": 10
+  }
+]
+```
+
+This endpoint deletes the user with the specified id
+
+### HTTP Request
+
+`GET https://docmanager1.herokuapp.com/api/roles/:id`
+
+### Verbs, Response
+GET ,  201
+
+### Headers
+
+Header    | Description
+--------- | -------
+token | valid user tokens
+
+### Note
+Only admin users are allowed to hit this endpoint
+
+<aside class="success">
+token should be added in the format 'authorization: token'
+</aside>
+
+# Document
+
+## Create a Document
+
+```javascript
+curl -i -X PUT -d "firstName=mark" https://docmanager1.herokuapp.com/users/:id \
+-H "token: dfsa09gmkdsglkdsg343242a32a.xlkdsfiosdf"
 ```
 
 > The above command returns JSON structured like this:
@@ -129,61 +648,106 @@ Parameter | Default | Description
 include_cats | false | If set to true, the result will also include cats.
 available | true | If set to false, the result will include kittens that have already been adopted.
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
 
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
+## Edit a document
 
 ```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
+curl -i -X PUT -d "content=gkmdkgdfkgkd" https://docmanager1.herokuapp.com/api/documents/:id \
+-H "token: dfsa09gmkdsglkdsg343242a32a.xlkdsfiosdf"
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
+[
+  {
+    "id": 1,
+    "name": "Fluffums",
+    "breed": "calico",
+    "fluffiness": 6,
+    "cuteness": 7
+  },
+  {
+    "id": 2,
+    "name": "Max",
+    "breed": "unknown",
+    "fluffiness": 5,
+    "cuteness": 10
+  }
+]
 ```
 
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+This endpoint returns all the role with the specified id
 
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+`GET https://docmanager1.herokuapp.com/api/roles/:id`
 
-### URL Parameters
+### Verbs, Response
+GET ,  201
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
+### Headers
+
+Header    | Description
+--------- | -------
+token | valid user tokens
+
+### Note
+Only admin users are allowed to hit this endpoint
+
+<aside class="success">
+token should be added in the format 'authorization: token'
+</aside>
+
+## Delete a document
+
+```javascript
+curl -i -X PUT -d "name=Have a baby" https://antbucket.herokuapp.com/api/v1/bucket_lists/1 \
+-H "token: 029kdfsa0932a.xlkdsfiosdfds"
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Fluffums",
+    "breed": "calico",
+    "fluffiness": 6,
+    "cuteness": 7
+  },
+  {
+    "id": 2,
+    "name": "Max",
+    "breed": "unknown",
+    "fluffiness": 5,
+    "cuteness": 10
+  }
+]
+```
+
+This endpoint returns all the role with the specified id
+
+### HTTP Request
+
+`GET https://docmanager1.herokuapp.com/api/roles/:id`
+
+### Verbs, Response
+GET ,  201
+
+### Headers
+
+Header    | Description
+--------- | -------
+token | valid user tokens
+
+### Note
+Only admin users are allowed to hit this endpoint
+
+<aside class="success">
+token should be added in the format 'authorization: token'
+</aside>
+
+
 
