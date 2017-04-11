@@ -20,7 +20,7 @@ Welcome to the DocManager API. You can use our API to access various endpoints t
 
 Endpoints data is returned in JSON format and error messages are displayed when there are errors with the request.
 
-Pls report any errors or concerns
+Pls report any errors or concerns noticed
 
 # Roles
 
